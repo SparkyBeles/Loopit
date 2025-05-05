@@ -1,0 +1,17 @@
+# Byggfiler
+build/
+DerivedData/
+
+# Användarspecifika Xcode-filer
+xcuserdata/
+
+# Pods (om du använder CocoaPods)
+Pods/
+
+# Firebase-konfig
+GoogleService-Info.plist
+*.json
+
+# macOS systemfiler
+.DS_Store
+
