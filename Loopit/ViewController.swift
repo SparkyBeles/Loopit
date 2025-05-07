@@ -35,6 +35,11 @@ class ViewController: UIViewController {
     }
 
     func navigateToMainScreen() {
-        performSegue(withIdentifier: "toHomeVC", sender: self)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let tabBarVC = storyboard.instantiateViewController(withIdentifier: "bottom_Navbar") as? UITabBarController {
+            tabBarVC.modalPresentationStyle = .fullScreen
+            self.present(tabBarVC, animated: true, completion: nil)
+        }
+
     }
 }

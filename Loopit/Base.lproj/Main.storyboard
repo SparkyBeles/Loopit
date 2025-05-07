@@ -72,7 +72,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="buO-VH-AdM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-770" y="4"/>
+            <point key="canvasLocation" x="-1822" y="4"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -111,10 +111,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JRP-zV-Z2D">
-                                <rect key="frame" x="170" y="761" width="75" height="35"/>
+                                <rect key="frame" x="136" y="761" width="143" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Create Account"/>
                                 <connections>
                                     <segue destination="A8K-yG-1Yc" kind="show" id="Sgc-yO-VMZ"/>
                                 </connections>
@@ -138,20 +138,20 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="4"/>
+            <point key="canvasLocation" x="-628" y="4"/>
         </scene>
-        <!--HomeVC-->
+        <!--Home-->
         <scene sceneID="NCb-RO-Ia7">
             <objects>
-                <viewController id="W6r-cv-E31" customClass="HomeVC" customModule="Loopit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Home" id="W6r-cv-E31" customClass="HomeVC" customModule="Loopit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0bJ-3x-Vl1">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Good job" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBr-56-0Po">
-                                <rect key="frame" x="203" y="277" width="70" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhg-jq-obl">
+                                <rect key="frame" x="74" y="136" width="76" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -159,14 +159,93 @@
                         <viewLayoutGuide key="safeArea" id="0le-YB-2Yi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="T9d-py-rPg"/>
                     <navigationItem key="navigationItem" id="TY0-eE-Xhc"/>
+                    <connections>
+                        <outlet property="greeting_Label" destination="jhg-jq-obl" id="Tc6-SA-4RW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CIg-a0-101" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1011" y="4"/>
+            <point key="canvasLocation" x="1073" y="4"/>
+        </scene>
+        <!--Streaks-->
+        <scene sceneID="T4p-yL-lUr">
+            <objects>
+                <viewController id="4vw-gC-L1D" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oHA-7f-uVV">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="I5y-kd-0T9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Streaks" image="figure.badminton" catalog="system" id="mFk-K7-ZWo"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QZU-ww-iY0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2138" y="4"/>
+        </scene>
+        <!--Add Habits-->
+        <scene sceneID="BEe-sA-Ea7">
+            <objects>
+                <viewController id="40y-Lm-pYb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MYL-1Y-kwe">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="z4t-gO-pRi"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Add Habits" image="plus" catalog="system" id="adQ-8u-lM5"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0G3-ad-mZo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3146" y="15"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="HEI-M3-dQg">
+            <objects>
+                <viewController id="1Ha-ha-A2J" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cTZ-zz-c9m">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="p9L-BP-bK5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle" catalog="system" id="BdV-Uo-fhH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fSH-JB-8KM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4075" y="5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="qeV-sf-zcz">
+            <objects>
+                <tabBarController storyboardIdentifier="bottom_Navbar" id="fY6-7k-PlT" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Gyw-9O-yKG">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="4vw-gC-L1D" kind="relationship" relationship="viewControllers" id="SrA-DM-EMI"/>
+                        <segue destination="W6r-cv-E31" kind="relationship" relationship="viewControllers" id="ch2-M7-ncC"/>
+                        <segue destination="40y-Lm-pYb" kind="relationship" relationship="viewControllers" id="eYk-wR-gCS"/>
+                        <segue destination="1Ha-ha-A2J" kind="relationship" relationship="viewControllers" id="ULh-p3-cKE"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JHO-pN-r9F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1862" y="-719"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ch2-M7-ncC"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="figure.badminton" catalog="system" width="118" height="128"/>
+        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="person.crop.circle" catalog="system" width="128" height="123"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
