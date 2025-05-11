@@ -40,11 +40,16 @@ class HabitsVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
               let title = HabitsTextView.text, !title.isEmpty else { return }
 
                let db = Firestore.firestore()
-               let data: [String: Any] = [
-                   "title": title,
-                   "streak": 0,
-                   "createdAt": Timestamp()
-               ]
+        
+        //  1 streak per day
+        let today = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
+
+        let data: [String: Any] = [
+            "title": title,
+            "streak": 0,
+            "lastUpdated": today,
+            "createdAt": Timestamp()
+        ]
 
                db.collection("users").document(uid).collection("habits").addDocument(data: data) { error in
                    if let error = error {
@@ -69,17 +74,19 @@ class HabitsVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                        let data = doc.data()
                        return Habit(
                            id: doc.documentID,
-                           title: data["title"] as? String ?? "Okänd",
+                           title: data["title"] as? String ?? "",
+                           lastUpdated: data["lastUpdated"] as? String ?? "",
+                           createdAt: (data["createdAt"] as? Timestamp)?.dateValue() ?? Date(),
                            streak: data["streak"] as? Int ?? 0
                        )
+
                    } ?? []
                    self.HabitsTableView.reloadData()
                }
            }
        }
 
-       // MARK: - TableView
-
+       
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
            return habits.count
        }
@@ -91,7 +98,7 @@ class HabitsVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
            return cell
        }
     
-    
+    //  Swipe to delete
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -99,6 +106,7 @@ class HabitsVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         let db = Firestore.firestore()
         let habit = habits[indexPath.row]
 
+        //  Deletes doc in firebase database.
         db.collection("users").document(uid).collection("habits").document(habit.id).delete { error in
             if let error = error {
                 print("Fel vid borttagning: \(error.localizedDescription)")

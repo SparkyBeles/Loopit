@@ -6,24 +6,65 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
-class StreaksVC: UIViewController {
+class StreaksVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var StreakTableView: UITableView!
+    
+    var streakHabits: [Habit] = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        StreakTableView.delegate = self
+        StreakTableView.dataSource = self
+        fetchStreakHabits()
 
-        // Do any additional setup after loading the view.
+      
     }
     
+    
+    func fetchStreakHabits() {
+           guard let uid = Auth.auth().currentUser?.uid else { return }
 
-    /*
-    // MARK: - Navigation
+           Firestore.firestore().collection("users").document(uid).collection("habits").order(by: "createdAt").getDocuments { snapshot, error in
+               if let error = error {
+                   print("Fel vid hämtning: \(error.localizedDescription)")
+               } else {
+                   self.streakHabits = snapshot?.documents.compactMap { doc in
+                       let data = doc.data()
+                       let streak = data["streak"] as? Int ?? 0
+                       if streak >= 5 {
+                           return Habit(
+                               id: doc.documentID,
+                               title: data["title"] as? String ?? "",
+                               lastUpdated: data["lastUpdated"] as? String ?? "",
+                               createdAt: (data["createdAt"] as? Timestamp)?.dateValue() ?? Date(),
+                               streak: streak
+                           )
+                       } else {
+                           return nil
+                       }
+                   } ?? []
+                   self.StreakTableView.reloadData()
+               }
+           }
+       }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+      
+       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+           return streakHabits.count
+       }
+
+       //  tableview layout
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           let cell = tableView.dequeueReusableCell(withIdentifier: "StreakCell", for: indexPath)
+           let habit = streakHabits[indexPath.row]
+           cell.textLabel?.text = "\(habit.title) – 🔥 \(habit.streak) dagar"
+           return cell
+       }
+
 
 }

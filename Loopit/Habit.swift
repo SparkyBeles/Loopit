@@ -9,6 +9,8 @@ import Foundation
 struct Habit{
     let id : String
     let title: String
-    let streak: Int
+    var lastUpdated: String
+    let createdAt: Date
+    var streak: Int
 }
 

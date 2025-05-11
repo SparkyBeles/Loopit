@@ -9,14 +9,24 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class HomeVC: UIViewController {
+class HomeVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var greeting_Label: UILabel!
-    override func viewDidLoad() {
-        fetchUserName()
-        super.viewDidLoad()
+   
+    
+    @IBOutlet weak var HabitsTableView: UITableView!
+    
+    var habits: [Habit] = []
 
-        // Do any additional setup after loading the view.
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        HabitsTableView.delegate = self
+        HabitsTableView.dataSource = self
+        fetchUserName()
+        fetchHabits()
+
+        
     }
     
     
@@ -39,14 +49,80 @@ class HomeVC: UIViewController {
                     }
                 }
             }
-    /*
-    // MARK: - Navigation
+  
+    func fetchHabits() {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            Firestore.firestore().collection("users").document(uid).collection("habits").order(by: "createdAt").getDocuments { snapshot, error in
+                if let error = error {
+                    print("Fel vid hämtning: \(error.localizedDescription)")
+                } else {
+                    self.habits = snapshot?.documents.compactMap { doc in
+                        let data = doc.data()
+                        return Habit(
+                            id: doc.documentID,
+                            title: data["title"] as? String ?? "",
+                            lastUpdated: data["lastUpdated"] as? String ?? "",
+                            createdAt: (data["createdAt"] as? Timestamp)?.dateValue() ?? Date(),
+                            streak: data["streak"] as? Int ?? 0
+                        )
+
+                    } ?? []
+                    self.HabitsTableView.reloadData()
+                }
+            }
+        }
+
+       //  TableView for Habits
+
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return habits.count
+        }
+
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HabitsCell", for: indexPath)
+            let habit = habits[indexPath.row]
+            cell.textLabel?.text = "\(habit.title) – Streak: \(habit.streak)"
+            return cell
+        }
+
+        // Tap to increase streak
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var habit = habits[indexPath.row]
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        // Creates todays date as a string
+        let today = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
+
+        // checks if habits already updated today
+        if habit.lastUpdated == today {
+            print("Streak is already updated for today")
+           
+            
+            // show alert if its updated
+            let alert = UIAlertController(title: "Already done", message: "Already logged streak", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+
+        // Increase streak by 1 if its not updated
+        habit.streak += 1
+        habit.lastUpdated = today
+
+        let db = Firestore.firestore()
+        db.collection("users").document(uid).collection("habits").document(habit.id).updateData([
+            "streak": habit.streak,
+            "lastUpdated": today
+        ]) { error in
+            if let error = error {
+                print("Kunde inte uppdatera streak: \(error.localizedDescription)")
+            } else {
+                self.habits[indexPath.row] = habit
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
     }
-    */
+
 
 }
